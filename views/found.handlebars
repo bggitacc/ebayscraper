@@ -1,0 +1,154 @@
+ <!-- Contact Section -->
+
+
+
+    <section id="contact">
+         
+        <div class="container">
+            <span id="recFound" style="color:#fff;">Results Found:&nbsp;{{this.recordsFound}}</span><br>
+
+            <span id="resCount" style="color:#fff;">Showing Results:&nbsp;</span><br>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+      
+                </div>
+            </div>
+
+
+       
+
+
+              {{#each data}}
+
+            <div class="row" >
+                <div class="col-md-12">
+                   
+
+                  
+
+                <div class="col-md-12 result" id="{{@index}}" style="margin-bottom:30px;border: 1px solid #666;padding: 6px 6px 6px 1px;" hidden>
+              
+           
+            <div class="col-md-3">
+                
+                <a href="{{this.link}}" target="_blank"><img src="{{this.image}}" height="220" width="220" style="margin-left:-10px"></a> 
+           </div>
+
+            <div class="col-md-9" style="background-color:#333;height:220px;padding-top:10px;border: 1px solid {{this.bg}}">
+               <a href="{{this.link}}" target="_blank"><span>{{this.title}}</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+               <form action="/delete"  method="post" style="margin-bottom:10px;"><input type="hidden" name="deleteRec" value="{{this.itemid}}"
+               ><button id="{{this._id}}" name="{{this._id}}" type="submit" onclick="$(this).parent(".result").remove();" class="btn btn-danger btn-xs">Delete</button></form>
+
+              <span style="color:white;">Price Info: &nbsp;{{this.price}}</span><br>
+              <span style="color:greenyellow;">Item Number:&nbsp;&nbsp;
+               {{this.itemid}}</span><br>
+
+                 <span style="color: gold;">Auction Notes: &nbsp;<strong>{{this.notes}}</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <span style="color:dodgerblue;">Item Sales Info: &nbsp;{{this.sold}}</span><br>
+
+             
+              <form action="/update" method="post" name="comment" style="margin-top: 10px;">
+
+              <input type="hidden" name="updateRec" value="{{this.itemid}}">
+  <div class="form-group">
+
+  <textarea style="height:40px;padding:5px;" class="form-control" rows="5" name="notes" placeholder="Notes"></textarea>
+
+        <button style="margin-top:10px;" id="{{this._id}}" type="submit" class="btn btn-xs btn-success">Submit</button>
+       
+       <label style="color:#fff;margin-left:10px;"> <input name="deleteNote" type="checkbox" ><span style="color:#fff;margin-left:10px;">Delete Note</span></label>
+        
+        </form>
+        </div>
+</form>
+
+
+               </div>
+               </div>
+              
+                        {{/each}}
+                 
+                </div>
+            </div>
+        </div>
+
+        <div id="page"><button id="pgBut" onclick="count()">More</button></div>
+
+<script>
+
+
+  
+var page = 0;
+
+
+var hideMore = $("#recFound").text();
+hideMore = parseInt(hideMore.slice(-2));
+
+console.log(hideMore);
+
+if (hideMore === 0) {
+
+    $("#resCount").hide();
+    $("#page").hide();
+}
+
+function count() {
+
+    var itmLim = page + 10;
+
+    
+
+    
+
+console.log(itmLim);
+console.log(page);
+
+    for (i=page; i<itmLim; i++){
+
+        hideItm = i - 10;
+
+       $("#"+hideItm+".result").hide();
+
+    $("#"+i+".result").fadeIn(1000);
+}
+if (itmLim >= hideMore) {
+
+       itmLim = hideMore;
+
+        $("#page").hide();
+ 
+ } 
+$("#resCount").text("Showing Results:    "+page+" - "+itmLim);
+
+
+
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+    page = page + 10;
+
+    if (page > hideMore) {
+
+        page = hideMore - 10;
+    }
+}
+
+
+    
+    //page(page);                          
+                            
+  function start() {
+       for (i=0;i<10;i++) {
+
+           $("#resCount").text("Showing Results:    1 - 10");
+
+       $("#"+i+".result").fadeIn(3000);
+   } 
+     $('html, body').animate({ scrollTop: 0 }, 'fast');
+     page = page + 10;
+  }                        
+start();
+</script>
+
+    </section>
+
+
